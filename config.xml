@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <database use_inicialise="0">
+        <mysql database="omsk" password="Ng51XLsint" server="127.0.0.1" user="root" charset="utf8" />
+    </database>
+    <logging use_file="1" use_syslog="0" >
+        <console level="10" />
+        <file level="10" path="$path/var/log/1c2nc.log" when="d" interval="1" count="7"/>
+        <syslog level="30" address_ip="10.19.2.18" address_port="514" />
+    </logging>
+</configuration>
