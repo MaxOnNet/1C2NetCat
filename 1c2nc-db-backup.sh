@@ -58,7 +58,7 @@ for path in  "/media/psf/Home/PycharmProjects/1C2NetCat/" "/home/v.tatarnikov/bi
         db_backup="${path}/SQL/backup/${db_name}-`date +%Y-%m-%d-%H-%M`.sql";
         db_backup_current="${path}/SQL/backup/${db_name}-current.sql";
 
-        mkdir -p "${path}/SQL/backup/"; 
+        mkdir -p "${path}/SQL/backup/";
 
         mysqldump --host=${db_host} --user=${db_user} --password=${db_password} --extended-insert --complete-insert ${db_name} > ${db_backup};
 
