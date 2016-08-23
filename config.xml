@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <database use_inicialise="0">
-        <mysql database="omsk" password="Ng51XLsint" server="127.0.0.1" user="root" charset="utf8" />
+        <mysql database="db_uchetenergo" password="Ng51XLsint" server="127.0.0.1" user="root" charset="utf8" />
     </database>
     <logging use_file="1" use_syslog="0" >
         <console level="10" />

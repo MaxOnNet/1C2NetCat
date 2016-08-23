@@ -61,6 +61,7 @@ for path in  "/media/psf/Home/PycharmProjects/1C2NetCat/" "/home/v.tatarnikov/bi
         mkdir -p "${path}/SQL/backup/";
 
         echo "DROP DATABASE ${db_name}" | mysql -h${db_host} -u${db_user} -p${db_password};
+        echo "CREATE DATABASE ${db_name}" | mysql -h${db_host} -u${db_user} -p${db_password};
         cat ${db_backup_current} | mysql -h${db_host} -u${db_user} -p${db_password} ${db_name};
         break;
     fi;
