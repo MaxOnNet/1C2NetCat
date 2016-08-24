@@ -8,4 +8,12 @@
         <file level="10" path="$path/var/log/1c2nc.log" when="d" interval="1" count="7"/>
         <syslog level="30" address_ip="10.19.2.18" address_port="514" />
     </logging>
+
+    <import>
+        <data path="$path/1C_Import/import0_1.xml" />
+        <offers path="$path/1C_Import/offers0_1.xml" />
+    </import>
+    <export>
+
+    </export>
 </configuration>

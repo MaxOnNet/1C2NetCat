@@ -32,3 +32,40 @@ from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 log = logging.getLogger(__name__)
 Base = declarative_base()
 
+
+class Classificator(Base):
+    __tablename__ = 'Classificator'
+    __table_args__ = {'mysql_engine': 'MyISAM', 'mysql_charset': 'utf8', 'mysql_collate': 'utf8_general_ci',
+                      'mysql_comment': 'Таблица с группами свойств'}
+    Classificator_ID = Column(Integer(), primary_key=True, autoincrement=True, nullable=False, doc="")
+    Classificator_Name = Column(String(64), nullable=False, default="", doc="")
+
+    Table_Name = Column(String(64), nullable=False, default="", doc="")
+    
+    System = Column(Integer(), default=0, nullable=False)
+    Sort_Type = Column(Integer(), default=0, nullable=False)
+    Sort_Direction = Column(Integer(), default=0, nullable=False)
+    SourceId = Column(String(255), nullable=False, doc="")
+    
+
+    @staticmethod
+    def parse(database, classificator_hash):
+        classificator_hash_test = {
+            'uuid': "uuid",
+            'name': "Text",
+            'items': {
+                {'uudi': "uuid", 'name': "Name"},
+                {'uudi': "uuid1", 'name': "Name"}
+            }
+        }
+        
+        if 'uuid' in classificator_hash and 'name' in classificator_hash:
+            query = database.query(Classificator)
+            query = query.filter(Classificator.SourceId == classificator_hash['uuid'])
+            
+            for row in query.all():
+                pass
+            else:
+                pass
+            
+            
