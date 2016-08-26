@@ -28,7 +28,7 @@ import logging
 import logging.handlers
 import threading
 
-import Interfaces.Parser
+import Interfaces.Parser as Parser
 import Interfaces.Config
 import Interfaces.MySQL as MySQL
 
@@ -49,12 +49,12 @@ class Application:
         threading.current_thread().name = 'main'
         
         logging.basicConfig(level=int(self.config.get("logging", "console", "level", "10")), stream=sys.stdout,
-                            format='%(asctime)s [%(module)11s] [%(name)9s] [%(funcName)19s] [%(lineno)4d] [%(levelname)7s] [%(threadName)4s] %(message)s')
+                            format='%(asctime)s [%(module)11s] [%(name)15s] [%(funcName)24s] [%(lineno)4d] [%(levelname)7s] [%(threadName)4s] %(message)s')
         
         log_handler_console = logging.StreamHandler()
         log_handler_console.setLevel(int(self.config.get("logging", "console", "level", "10")))
         log_handler_console.setFormatter(
-            logging.Formatter('%(asctime)s [%(module)11s] [%(name)9s]  [%(funcName)19s] [%(lineno)4d] [%(levelname)7s] [%(threadName)4s] %(message)s'))
+            logging.Formatter('%(asctime)s [%(module)11s] [%(name)15s] [%(funcName)24s] [%(lineno)4d] [%(levelname)7s] [%(threadName)4s] %(message)s'))
         
         if bool(int(self.config.get("logging", "", "use_file", "0"))):
             log_handler_file = logging.handlers.TimedRotatingFileHandler(self.config.get("logging", "file", "path", "4gain.log"),
@@ -63,7 +63,7 @@ class Application:
                                                                          backupCount=int(self.config.get("logging", "file", "count", "1")))
             log_handler_file.setLevel(int(self.config.get("logging", "file", "level", "10")))
             log_handler_file.setFormatter(
-                logging.Formatter('%(asctime)s [%(module)11s] [%(name)9s]  [%(funcName)19s] [%(lineno)4d] [%(levelname)7s] [%(threadName)4s] %(message)s'))
+                logging.Formatter('%(asctime)s [%(module)11s] [%(name)15s] [%(funcName)24s] [%(lineno)4d] [%(levelname)7s] [%(threadName)4s] %(message)s'))
             
             logging.getLogger('').addHandler(log_handler_file)
         
@@ -72,7 +72,7 @@ class Application:
             self.config.get("logging", "syslog", "address_ip", "127.0.0.1"), int(self.config.get("logging", "syslog", "address_port", "514"))))
             log_handler_syslog.setLevel(int(self.config.get("logging", "file", "level", "10")))
             log_handler_syslog.setFormatter(
-                logging.Formatter('%(asctime)s [%(module)11s] [%(name)9s]  [%(funcName)19s] [%(lineno)4d] [%(levelname)7s] [%(threadName)4s] %(message)s'))
+                logging.Formatter('%(asctime)s [%(module)11s] [%(name)15s] [%(funcName)24s] [%(lineno)4d] [%(levelname)7s] [%(threadName)4s] %(message)s'))
             
             logging.getLogger('').addHandler(log_handler_syslog)
         
@@ -88,7 +88,7 @@ class Application:
             self.database_maker = MySQL.init_fast(self.config)
         
         self.database = self.database_maker()
-    
+        self.netcat = MySQL.Schema.NetCat(self)
     
     def _database_close(self):
         log.info("Отключение баз данных")
@@ -101,10 +101,12 @@ class Application:
             pass
         
     def _parser_init(self):
-        self.parser_groups = Interfaces.Parser.Groups(self)
-    
+        #self.parser_groups = Interfaces.Parser.Groups(self)
+        self.parser_classificators = Interfaces.Parser.Classificators(self)
+        
     def _parser_work(self):
-        self.parser_groups.work()
+        #self.parser_groups.work()
+        self.parser_classificators.work()
         
 if __name__ == '__main__':
     app = Application()
